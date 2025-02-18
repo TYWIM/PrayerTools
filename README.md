@@ -27,38 +27,49 @@ The page will automatically adjust the language according to the current browser
 *node 18*，其他版本不保证能稳定运行.
 
 # 🍗 使用与安装
-### 1.安装依赖
-进入解压后的文件目录
+
+## 快速开始
+1. 在 [Action](https://github.com/TYWIM/PrayerTools/actions) 下载可执行文件
+2. 打开下载完成的 `dits.zip` 解压至服务器 __*最好是英文路径*__
+3. 建立网站目录选择解压后的目录
+
+## 构建
+1. 下载源码
+2. 进入解压后的文件目录
 ```
 npm install
 ```
-### 2.打包build
-控制台输入
+3. 打包build，控制台输入
 ```
 npm run build
 ```
-`
-npm install http-server  
-`
-`
-cd dist  
-`
-`
-http-server
-`
-# 远程命令
+4. dits目录下就是编译好的内容
+5. ```npm install http-server```
+6. ```cd dist```
+7. ```http-server```
+
+## 远程命令
 **为确保数据传输的安全性，请使用[api](https://github.com/lctoolsweb/DanhengWebTools-transmit)转发请求.请在`.env`文件中填入api地址**
 例如
 ```
-VITE_DHWT_API_SERVER=https://ooo.00x00.ooo
+VITE_DHWT_API_SERVER=https://srapi.mihoyou.com
 ```
 **前端与api都需要启用https协议,否则会出现请求异常**
 
-# Ciallo～(∠・ω )⌒☆
+## Ciallo～(∠・ω )⌒☆
 点击特效与音效可以在` .env`文件中开启/关闭
 ```
 VITE_CLICK_AUDIO=true
 VITE_CLICK_TEXT=true
+```
+## 远程密码设置
+是否启用密码（true/false）默认关闭
+```
+VITE_ENABLE_PASSWORD_CHECK=false
+```
+执行密码（当启用时有效）
+```
+VITE_EXEC_PASSWORD=admin
 ```
 
 # 免责声明
