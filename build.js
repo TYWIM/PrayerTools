@@ -4,7 +4,7 @@ const gradient = require('gradient-string');
 
 const startTime = new Date();
 
-console.log(gradient.retro('✨✨Starting production build...'));
+console.log(gradient.retro('✨✨开始进行打包...'));
 
 const buildProcess = exec('vite build --mode production', (error, stdout, stderr) => {
   if (error) {
