@@ -2,6 +2,19 @@
   <div>
     <div :style="{ height: '20px' }"></div>
     <a-form :model="form" class="form-container" @submit="handleSubmit">
+      <a-form-item 
+        v-if="enablePasswordCheck"
+        field="password" 
+        label="执行密码"
+      >
+        <a-input-password 
+          v-model="form.password"
+          placeholder="请输入执行密码"
+          allow-clear
+          @keypress.enter="handleSubmit"
+        />
+      </a-form-item>
+
       <a-form-item field="keyType" label="Key Type">
         <a-input v-model="form.keyType" placeholder="请输入Key Type..." />
       </a-form-item>
@@ -21,19 +34,29 @@
         <a-input v-model="responseData" :disabled="true" />
       </a-form-item>
     </a-form>
-    
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import { Message } from '@arco-design/web-vue';
 import axios, { AxiosError } from 'axios';
-const API_BASE_URL = import.meta.env.VITE_DHWT_API_SERVER;
+
+const env = import.meta.env;
+const API_BASE_URL = env.VITE_DHWT_API_SERVER;
+const enablePasswordCheck = computed(() => {
+  const value = env.VITE_ENABLE_PASSWORD_CHECK;
+  return value === 'true' || value === '1'; // 支持多种真值表示
+});
+
+if (import.meta.env.DEV) {
+  console.log('Password Check Status:', enablePasswordCheck.value);
+}
 
 type AlertType = 'success' | 'info' | 'warning' | 'error';
 
 const form = reactive({
+  ...(enablePasswordCheck.value && { password: '' }), // 条件初始化
   keyType: 'PEM',
   uid: '',
   command: ''
@@ -46,6 +69,9 @@ const message = ref('');
 
 const handleReset = () => {
   localStorage.clear();
+  if (enablePasswordCheck.value) {
+    form.password = '';
+  }
   form.keyType = "PEM";
   form.uid = "";
   form.command = "";
@@ -59,18 +85,29 @@ const handleSubmit = async (data: { values: Record<string, any>; errors: Record<
   ev.preventDefault();
 
   try {
+    if (enablePasswordCheck.value) {
+      if (!form.password?.trim()) {
+        Message.error('请输入执行密码');
+        return;
+      }
+      const correctPassword = env.VITE_EXEC_PASSWORD || "dev_password";
+      if (form.password !== correctPassword) {
+        Message.error('密码错误，请检查后重试');
+        return;
+      }
+    }
+
     const res = await axios.post(`${API_BASE_URL}/api/submit`, {
       keyType: form.keyType,
       uid: form.uid,
       command: form.command
     });
 
-    
-    const responseMessage = res.data.message; 
+    const responseMessage = res.data.message;
     if (res.data.code === 0) {
       localStorage.setItem('uid', form.uid);
       console.log('UID stored:', localStorage.getItem('uid'));
-}
+    }
 
     responseData.value = JSON.stringify(res.data, null, 2);
     showMessage.value = true;
@@ -81,11 +118,9 @@ const handleSubmit = async (data: { values: Record<string, any>; errors: Record<
     let errorMessage = '请求失败';
     if (axios.isAxiosError(err)) {
       if (err.response) {
-        if (err.response.status === 429) {
-          errorMessage = '请求速率过快，请稍后重试';
-        } else {
-          errorMessage = (err.response.data as { error?: string }).error || err.response.statusText;
-        }
+        errorMessage = err.response.status === 429 
+          ? '请求速率过快，请稍后重试' 
+          : (err.response.data as { error?: string }).error || err.response.statusText;
       } else {
         errorMessage = err.message;
       }
@@ -105,27 +140,19 @@ const handleSubmit = async (data: { values: Record<string, any>; errors: Record<
   margin-top: 20px;
   width: 600px;
   margin: auto;
+
+  .arco-input-password {
+    width: 100%;
+    max-width: 300px;
+    
+    @media screen and (max-width: 768px) {
+      max-width: 100%;
+    }
+  }
 }
 
 a-form-item {
   margin-bottom: 16px;
-}
-
-a-input-group {
-  display: flex;
-  align-items: center;
-}
-
-a-input-group > a-input {
-  margin-right: 8px;
-}
-
-.input-small {
-  width: 80px;
-}
-
-.input-medium {
-  width: 160px;
 }
 
 @media screen and (max-width: 768px) {
@@ -134,35 +161,13 @@ a-input-group > a-input {
     padding: 10px;
   }
 
-  a-input-group {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  a-input-group > a-input {
-    margin-right: 0;
-    margin-bottom: 8px;
-    width: 100%;
-  }
-
-  .input-small,
-  .input-medium {
-    width: 100%;
-  }
-
   a-space {
-    display: flex;
     flex-direction: column;
-    width: 100%;
-  }
-
-  a-space > .arco-button {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  a-form-item {
-    margin-bottom: 12px;
+    
+    .arco-button {
+      width: 100%;
+      margin-top: 10px;
+    }
   }
 }
 </style>
