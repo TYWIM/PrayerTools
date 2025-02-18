@@ -36,7 +36,7 @@
         当前版本已过时，请前往Github更新。
       </div>
       <div class="alert-btn">
-        <a href="https://github.com/lctoolsweb/DanhengWebTools" target="_blank">
+        <a href="https://github.com/TYWIM/PrayerTools" target="_blank">
           <button>确认</button>
         </a>
       </div>
@@ -100,12 +100,12 @@ const updateTranslatedText = () => {
 };
 
 
-const currentVersion = '1.1.3'; //为了及时获取最新版本，请勿修改此版本号！
+const currentVersion = 'v1.0.0'; //为了及时获取最新版本，请勿修改此版本号！
 const latestVersion = ref('');  
 
 const fetchLatestVersion = async () => {
   try {
-    const response = await axios.get('https://api.github.com/repos/lctoolsweb/DanhengWebTools/releases');
+    const response = await axios.get('https://api.github.com/repos/TYWIM/PrayerTools/releases');
     if (response.data && response.data.length > 0) {
       latestVersion.value = response.data[0].tag_name;
       if (latestVersion.value > currentVersion) {
