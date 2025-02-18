@@ -2,17 +2,17 @@
   <div class="full-screen">
     <a-page-header
       :style="{ width: '100vw', background: theme === 'dark' ? 'black' : 'white' }"
-      title="DanhengWebTools"
+      title="PrayerTools"
     >
       <template #extra>
         <div class="extra-container">
           <span :class="latencyClass">{{ latency }} ms</span>
 
-          <a href="https://github.com/lctoolsweb/DanhengWebTools" target="_blank" rel="noopener noreferrer" class="github-link">
+          <a href="https://github.com/TYWIM/PrayerTools" target="_blank" rel="noopener noreferrer" class="github-link">
             <icon-github :class="{ 'dark-icon': theme === 'dark' }" class="icon" />
           </a>
 
-          <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=J54m8XB3Ig8VJ41ICO8KW029aSz4fFB-&authKey=tq9%2BSsg2M30Jy1v9OwJEa%2B%2FmarnH2AslQYQsv24BkkeqY39%2FtlpZsrIkqO01SScg&noverify=0&group_code=124750952" target="_blank" rel="noopener noreferrer" class="qq-link">
+          <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=J54m8XB3Ig8VJ41ICO8KW029aSz4fFB-&authKey=tq9%2BSsg2M30Jy1v9OwJEa%2B%2FmarnH2AslQYQsv24BkkeqY39%2FtlpZsrIkqO01SScg&noverify=0&group_code=682921184" target="_blank" rel="noopener noreferrer" class="qq-link">
             <icon-qq-circle-fill :class="{ 'dark-icon': theme === 'dark' }" class="icon" />
           </a>
 
