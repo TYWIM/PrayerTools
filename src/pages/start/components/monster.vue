@@ -80,7 +80,7 @@ function copyvalue() {
 const send: any = inject("send")
 
 const showNotice = ref(true)
-const noticeContent = 'LunarCore及其他任何衍生工具都是免费软件，如果你是付费购买的，那你就被骗了，请及时退款并举报。'
+const noticeContent = 'PrayerTools及其他任何衍生工具都是免费软件，如果你是付费购买的，那你就被骗了，请及时退款并举报。'
 
 onMounted(() => {
   // 根据浏览器语言设置初始语言
