@@ -9,16 +9,16 @@ const options: I18nOptions = {
   messages: {
     zh: {
       main:{
-        notice: "LunarCore及其他任何衍生工具都是免费软件，如果你是付费购买的，那你就被骗了，请及时退款并举报。",
+        notice: "PrayerTools及其他任何衍生工具都是免费软件，如果你是付费购买的，那你就被骗了，请及时退款并举报。",
         copy: "复制",
         success: "已复制",
         text1: "请输入物品",
         text2: "请输入数量",
         execute: "执行",
         tips: "请先在下方的输入框中输入一个数字，然后再勾选属性词条，例如1代表该词条强化一次",
-        version:"工具版本v1.1.3 游戏版本3.0.0",
-        views:"截至目前,LunarCoreWebTools已经被安装/访问了",
-        time:"次   © 2024 lctoolsweb",
+        version:"工具版本v1.0.0 游戏版本3.0.0",
+        views:"截至目前,PrayerTools已经被安装/访问了",
+        time:"次   © 2024 TYWIM",
         introduce:"适用于Danhengserver的web命令生成器",
         typename:"角色：",
       },
@@ -55,9 +55,9 @@ const options: I18nOptions = {
       
       
       ct: {
-        title: "～(∠・ω< )⌒☆Tools",
+        title: "PrayerTools",
         introduce: "适用于DanhengServer的web命令生成器",
-        start: "Ciallo～",
+        start: "PrayerTools",
         languageSwitchSuccess:"语言切换成功"
       },
       commuse: {
@@ -74,13 +74,13 @@ const options: I18nOptions = {
     },
     en: {
       ct:{
-        title: "～(∠・ω< )⌒☆Tools-EN",
+        title: "PrayerTools",
         introduce: "Web command generator for DanhengServer",
         start: "Ciallo～",
         languageSwitchSuccess:"The language switch is successful"
       },
       main:{
-        notice: "LunarCore and any other derivatives are free software, and if you paid for it, you've been scammed, so get your money back and report it in time.",
+        notice: "PrayerTools and any other derivatives are free software, and if you paid for it, you've been scammed, so get your money back and report it in time.",
         copy: "copy",
         success: "copied",
         text1: "Please enter the item",
@@ -88,8 +88,8 @@ const options: I18nOptions = {
         execute: "execute",
         tips: "If the command is not refreshed, please check the attribute entry again",
         version:"ToolsVersion:0.1.3 GameVersion:2.1.0",
-        views:"Up to now, LunarCoreWebTools has been accessed/installed",
-        time:"times  © 2024 lctoolsweb",
+        views:"Up to now, PrayerTools has been accessed/installed",
+        time:"times  © 2024 TYWIM",
       },
       monster:{
         monster1: "Outsider Show Monster",
