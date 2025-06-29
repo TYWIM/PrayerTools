@@ -29,7 +29,7 @@
           玩家管理
         </a-menu-item>
         <a-menu-item key="/start/commandplayground" @click="topath('/start/commandplayground')">
-          指令广场
+          留言板
         </a-menu-item>
 
       </a-sub-menu>
