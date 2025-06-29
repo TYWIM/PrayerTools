@@ -12,10 +12,11 @@
 - [√] **远程执行**
 - [√] **远程执行密码**
 - [√] **服务器状态查看**
-- 
+- [√] **用户查询**
+- [√] **玩家管理**
+
 ## 待实现功能
 
-- [ ] **用户查询**
 - [ ] **执行密码管理后台**
 - [ ] **玩家验证系统**
 - [ ] **卡池文件生成**
@@ -51,7 +52,7 @@ npm run build
 7. ```http-server```
 
 ## 远程命令
-**为确保数据传输的安全性，请使用[api](https://github.com/lctoolsweb/DanhengWebTools-transmit)转发请求.请在`.env`文件中填入api地址**
+**为确保数据传输的安全性，请使用[api](https://github.com/TYWIM/DanhengWebTools-transmit)转发请求.请在`.env`文件中填入api地址**
 例如
 ```
 VITE_DHWT_API_SERVER=https://srapi.mihoyou.com

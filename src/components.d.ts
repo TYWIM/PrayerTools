@@ -5,6 +5,18 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AButton: typeof import('@arco-design/web-vue')['Button']
+    ACard: typeof import('@arco-design/web-vue')['Card']
+    AInput: typeof import('@arco-design/web-vue')['Input']
+    AMenu: typeof import('@arco-design/web-vue')['Menu']
+    AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
+    AModal: typeof import('@arco-design/web-vue')['Modal']
+    AOption: typeof import('@arco-design/web-vue')['Option']
+    APageHeader: typeof import('@arco-design/web-vue')['PageHeader']
+    ASelect: typeof import('@arco-design/web-vue')['Select']
+    ASpace: typeof import('@arco-design/web-vue')['Space']
+    ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
+    ATable: typeof import('@arco-design/web-vue')['Table']
     ClickEffect: typeof import('./components/ClickEffect.vue')['default']
     Footer: typeof import('./components/footer/index.vue')['default']
     Header: typeof import('./components/Header/index.vue')['default']

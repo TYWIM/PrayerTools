@@ -5,12 +5,23 @@
       <span style="float: right;">在线人数: {{ onlineCount }}</span>
     </template>
     <div style="margin-bottom: 20px;">
-      <a-input 
-        v-model="searchUID" 
-        placeholder="输入UID搜索" 
-        style="width: 300px; margin-right: 10px;" 
-      />
-      <a-button type="primary" @click="handleSearch">搜索</a-button>
+      <a-space>
+        <a-input 
+          v-model="searchUID" 
+          placeholder="输入UID搜索" 
+          style="width: 200px;" 
+          @keypress.enter="handleSearch"
+        />
+        <a-input 
+          v-model="searchName" 
+          placeholder="输入用户名搜索" 
+          style="width: 200px;" 
+          @keypress.enter="handleSearch"
+        />
+        <a-button type="primary" @click="handleSearch">搜索</a-button>
+        <a-button @click="clearSearch">清空</a-button>
+        <a-button @click="refreshData" :loading="isLoading">刷新</a-button>
+      </a-space>
     </div>
     <div class="table-container">
       <a-table 
@@ -68,13 +79,6 @@
         </div>
       </div>
     </a-modal>
-
-    <!-- 遮罩弹窗 -->
-    <div v-if="isMaskVisible" class="mask">
-      <div class="mask-content">
-        監修中...
-      </div>
-    </div>
   </a-card>
 </template>
 
@@ -88,36 +92,66 @@ import SubMission from './json/SubMission.json';
 export default {
   setup() {
     const columns = [
-      { title: 'Head Icon ID', dataIndex: 'headIcon', key: 'headIcon' },
-      { title: 'UID', dataIndex: 'uid', key: 'uid' },
-      { title: 'Name', dataIndex: 'name', key: 'name' },
-      { title: 'Level', dataIndex: 'level', key: 'level' }
+      {
+        title: 'UID',
+        dataIndex: 'uid',
+        key: 'uid',
+        width: 200,
+      },
+      {
+        title: '名字',
+        dataIndex: 'name',
+        key: 'name',
+        width: 200,
+      },
     ];
 
     const data = reactive([]);
     const searchUID = ref('');
+    const searchName = ref('');
     const searchQuery = ref('');
     const isModalVisible = ref(false);
+    const isLoading = ref(false);
     const isMaskVisible = ref(true);
     const selectedUID = ref('');
 
+    const API_BASE_URL = import.meta.env.VITE_DHWT_API_SERVER;
+
     const fetchStatus = async () => {
+      isLoading.value = true;
       try {
-        const response = await axios.get('https://lctweb.ates.top/api/status');
-        const players = response.data.onlinePlayers.map(player => ({
-          ...player,
-          uid: String(player.uid), 
-          headIcon: player.headIcon,
-        }));
-        data.push(...players);
+        // 清空现有数据
+        data.splice(0, data.length);
+        
+        const response = await axios.get(`${API_BASE_URL}/api/status`);
+        
+        if (response.data && response.data.code === 0) {
+          const players = response.data.data.onlinePlayers?.map(player => ({
+            ...player,
+            uid: String(player.uid), 
+            headIcon: player.headIcon || 'N/A',
+            name: player.name || '未知用户',
+            level: player.level || 0
+          })) || [];
+          data.push(...players);
+        } else {
+          Message.warning('获取玩家数据失败');
+        }
       } catch (error) {
         console.error('Error fetching status:', error);
+        Message.error('连接服务器失败，请检查API配置');
+      } finally {
+        isLoading.value = false;
       }
     };
 
     const filteredData = computed(() => {
-      if (!searchQuery.value) return data;
-      return data.filter(player => player.uid.includes(searchQuery.value));
+      if (!searchQuery.value && !searchName.value) return data;
+      return data.filter(player => {
+        const uidMatch = searchQuery.value ? player.uid.includes(searchQuery.value) : true;
+        const nameMatch = searchName.value ? player.name.toLowerCase().includes(searchName.value.toLowerCase()) : true;
+        return uidMatch && nameMatch;
+      });
     });
 
     const onlineCount = computed(() => {
@@ -126,6 +160,17 @@ export default {
 
     const handleSearch = () => {
       searchQuery.value = searchUID.value;
+      // searchName已经在computed中处理，不需要额外赋值
+    };
+
+    const clearSearch = () => {
+      searchUID.value = '';
+      searchName.value = '';
+      searchQuery.value = '';
+    };
+
+    const refreshData = () => {
+      fetchStatus();
     };
 
     const rowClassName = (record) => {
@@ -151,8 +196,8 @@ export default {
     const subMissionOptions = ref([]);
 
     const fetchMissionData = async (uid) => {
-      const address = 'https://lctweb.ates.top/api/command';
-      const adminpass = 'mhfude';
+      const address = `${API_BASE_URL}/api/player`;
+      const adminpass = localStorage.getItem('adminpass') || '';
 
 
       if (!address || !adminpass || !uid) {
@@ -161,28 +206,25 @@ export default {
       }
 
       try {
-        const response = await axios.post(address, new URLSearchParams({
-          command: 'mission running',
-          adminpass,
-          uid
-        }), {
+        const response = await axios.post(address, {
+          uid: uid
+        }, {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
           }
         });
 
         const responseData = response.data;
-        if (responseData.retcode !== 0) {
+        if (responseData.code !== 0) {
           Message.error('获取任务信息失败');
           return;
         }
 
-        const missionInfo = responseData.data.missioninfo;
+        const missionInfo = responseData.data.acceptedMissionList || {};
 
         const categorizedMissions = {};
 
-        missionInfo.forEach(mission => {
-          const mainMissionId = mission.mainMission.toString();
+        Object.entries(missionInfo).forEach(([mainMissionId, subMissions]) => {
           const typename = MainMission[mainMissionId]?.typename || '未知类型';
 
           if (!categorizedMissions[typename]) {
@@ -192,9 +234,9 @@ export default {
           categorizedMissions[typename].push({
             value: mainMissionId,
             label: MainMission[mainMissionId]?.text || '未知任务',
-            children: mission.subMissions.map(subMission => ({
-              value: subMission.toString(),
-              label: SubMission[subMission.toString()] || '未知子任务'
+            children: subMissions.map(subMissionId => ({
+              value: subMissionId.toString(),
+              label: SubMission[subMissionId.toString()] || '未知子任务'
             }))
           });
         });
@@ -219,12 +261,10 @@ export default {
     };
 
     const completeMainMission = async () => {
-      const address = localStorage.getItem('address');
-      const adminpass = localStorage.getItem('adminpass');
       const uid = selectedUID.value;
 
-      if (!address || !adminpass || !uid) {
-        Message.info('用户未登录，请重试');
+      if (!uid) {
+        Message.info('请先选择用户');
         return;
       }
 
@@ -236,18 +276,18 @@ export default {
       console.log('Selected Main Mission ID:', selectedMainMission.value);
 
       try {
-        const response = await axios.post(address, new URLSearchParams({
-          command: `mission finish ${selectedMainMission.value}`,
-          adminpass,
-          uid
-        }), {
+        const response = await axios.post(`${API_BASE_URL}/api/submit`, {
+          keyType: 'PEM',
+          uid: uid,
+          command: `mission finish ${selectedMainMission.value}`
+        }, {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
           }
         });
 
         const responseData = response.data;
-        if (responseData.retcode === 0) {
+        if (responseData.code === 0) {
           Message.success('主任务完成成功');
         } else {
           Message.error('主任务完成失败');
@@ -259,12 +299,10 @@ export default {
     };
 
     const completeSubMission = async () => {
-      const address = localStorage.getItem('address');
-      const adminpass = localStorage.getItem('adminpass');
       const uid = selectedUID.value;
 
-      if (!address || !adminpass || !uid) {
-        Message.info('用户未登录，请重试');
+      if (!uid) {
+        Message.info('请先选择用户');
         return;
       }
 
@@ -276,18 +314,18 @@ export default {
       console.log('Selected Sub Mission ID:', selectedSubMission.value);
 
       try {
-        const response = await axios.post(address, new URLSearchParams({
-          command: `mission finish ${selectedSubMission.value}`,
-          adminpass,
-          uid
-        }), {
+        const response = await axios.post(`${API_BASE_URL}/api/submit`, {
+          keyType: 'PEM',
+          uid: uid,
+          command: `mission finish ${selectedSubMission.value}`
+        }, {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
           }
         });
 
         const responseData = response.data;
-        if (responseData.retcode === 0) {
+        if (responseData.code === 0) {
           Message.success('子任务完成成功');
         } else {
           Message.error('子任务完成失败');
@@ -302,12 +340,16 @@ export default {
       columns,
       data,
       searchUID,
+      searchName,
       searchQuery,
       handleSearch,
+      clearSearch,
+      refreshData,
       filteredData,
       onlineCount,
       isModalVisible,
       isMaskVisible,
+      isLoading,
       rowClassName,
       onRowClick,
       showNotice,
