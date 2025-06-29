@@ -22,12 +22,15 @@
         <a-menu-item key="/start/about" @click="topath('/start/about')">
           关于
         </a-menu-item>
+        <a-menu-item key="/start/information" @click="topath('/start/information')">
+          服务器状态
+        </a-menu-item>
         <a-menu-item key="/start/player" @click="topath('/start/player')">
           玩家管理
         </a-menu-item>
-  <a-menu-item key="/start/commandplayground" @click="topath('/start/commandplayground')">
+        <a-menu-item key="/start/commandplayground" @click="topath('/start/commandplayground')">
           指令广场
-  </a-menu-item>
+        </a-menu-item>
 
       </a-sub-menu>
     </a-menu>
