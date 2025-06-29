@@ -5,22 +5,6 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AAlert: typeof import('@arco-design/web-vue')['Alert']
-    AButton: typeof import('@arco-design/web-vue')['Button']
-    ACascader: typeof import('@arco-design/web-vue')['Cascader']
-    ACheckbox: typeof import('@arco-design/web-vue')['Checkbox']
-    AForm: typeof import('@arco-design/web-vue')['Form']
-    AFormItem: typeof import('@arco-design/web-vue')['FormItem']
-    AInput: typeof import('@arco-design/web-vue')['Input']
-    AInputNumber: typeof import('@arco-design/web-vue')['InputNumber']
-    AInputPassword: typeof import('@arco-design/web-vue')['InputPassword']
-    AMenu: typeof import('@arco-design/web-vue')['Menu']
-    AMenuItem: typeof import('@arco-design/web-vue')['MenuItem']
-    AOption: typeof import('@arco-design/web-vue')['Option']
-    APageHeader: typeof import('@arco-design/web-vue')['PageHeader']
-    ASelect: typeof import('@arco-design/web-vue')['Select']
-    ASpace: typeof import('@arco-design/web-vue')['Space']
-    ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ClickEffect: typeof import('./components/ClickEffect.vue')['default']
     Footer: typeof import('./components/footer/index.vue')['default']
     Header: typeof import('./components/Header/index.vue')['default']

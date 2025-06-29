@@ -1,7 +1,7 @@
 {
-  "name": "lunarcore-tools",
+  "name": "PrayerTools",
   "version": "0.1.4",
-  "author": "moraxs",
+  "author": "TYWIM",
   "scripts": {
     "dev": "vite --mode development",
     "build": "node build.js",
