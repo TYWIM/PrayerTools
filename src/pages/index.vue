@@ -100,7 +100,7 @@ const updateTranslatedText = () => {
 };
 
 
-const currentVersion = 'v1.0.0'; //为了及时获取最新版本，请勿修改此版本号！
+const currentVersion = 'v1.5.0'; //为了及时获取最新版本，请勿修改此版本号！
 const latestVersion = ref('');  
 
 const fetchLatestVersion = async () => {
