@@ -100,7 +100,7 @@ const updateTranslatedText = () => {
 };
 
 
-const currentVersion = '1.5.0'; // 用于版本比较的基准版本号
+const currentVersion = '1.6.0'; // 用于版本比较的基准版本号
 const latestVersion = ref('');  
 
 const fetchLatestVersion = async () => {
