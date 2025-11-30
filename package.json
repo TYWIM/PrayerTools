@@ -1,6 +1,6 @@
 {
   "name": "PrayerTools",
-  "version": "0.1.4",
+  "version": "1.6.0",
   "author": "TYWIM",
   "scripts": {
     "dev": "vite --mode development",
