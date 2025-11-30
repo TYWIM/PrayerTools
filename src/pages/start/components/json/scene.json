@@ -8,10 +8,6 @@
     "value": 10001
   },
   {
-    "label": "[Train] null",
-    "value": 10002
-  },
-  {
     "label": "[Town] 行政区",
     "value": 10101
   },
@@ -44,20 +40,20 @@
     "value": 10306
   },
   {
-    "label": "[Town] {TEXTJOIN#87}",
-    "value": 10341
-  },
-  {
-    "label": "[Town] null",
-    "value": 10401
-  },
-  {
-    "label": "[Town] null",
-    "value": 10402
-  },
-  {
     "label": "[Maze] 基座舱段",
     "value": 20001
+  },
+  {
+    "label": "[Raid] 命途空间",
+    "value": 20100
+  },
+  {
+    "label": "[Maze] 城郊雪原",
+    "value": 20101
+  },
+  {
+    "label": "[Maze] 边缘通路",
+    "value": 20111
   },
   {
     "label": "[Maze] 收容舱段",
@@ -204,16 +200,16 @@
     "value": 20332
   },
   {
-    "label": "[Maze] null",
-    "value": 20411
+    "label": "[Challenge]",
+    "value": 30101
   },
   {
-    "label": "[Maze] null",
-    "value": 20412
+    "label": "[Challenge]",
+    "value": 30102
   },
   {
-    "label": "[Maze] null",
-    "value": 20413
+    "label": "[Challenge]",
+    "value": 30103
   },
   {
     "label": "[Challenge]",
@@ -276,12 +272,12 @@
     "value": 30201
   },
   {
-    "label": "[Raid] null",
-    "value": 30301
+    "label": "[TrialActivity]",
+    "value": 30500
   },
   {
-    "label": "[Raid] null",
-    "value": 30401
+    "label": "[TrialActivity]",
+    "value": 30501
   },
   {
     "label": "[TrialActivity]",
@@ -947,36 +943,5 @@
     "label": "[Rogue] 模拟宇宙",
     "value": 81313
   },
-  {
-    "label": "[Maze] 呓语密林·神悟树庭",
-    "value": 20101
-  },
-  {
-    "label": "[Maze] 神谕圣地·雅努萨波利斯",
-    "value": 20102
-  },
-  {
-    "label": "[Maze] 半神议院·黎明云崖",
-    "value": 20201
-  },
-  {
-    "label": "[Maze] 龙骸古城·斯缇科西亚",
-    "value": 20202
-  },
-  {
-    "label": "[Maze] 穹顶关塞·晨昏之眼",
-    "value": 20301
-  },
-  {
-    "label": "[Maze] 云端遗堡·晨昏之眼",
-    "value": 20302
-  },
-  {
-    "label": "[Maze] 无晖祈堂·黎明云崖",
-    "value": 20303
-  },
-  {
-    "label": "[Maze] 沉沦暮城·奥赫玛",
-    "value": 20304
-  }
+  
 ]
